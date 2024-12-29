@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock News</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <select id="stockSelect">
+        <option value="Tata Motors Ltd">Tata Motors Ltd</option>
+        <option value="Reliance Industries">Reliance Industries</option>
+        <option value="Infosys">Infosys</option>
+    </select>
+    <div id="newsContainer"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#stockSelect').change(function() {
+                const stockName = $(this).val();
+                fetchNews(stockName);
+            });
+
+            function fetchNews(stockName) {
+                $.get(`http://localhost:5000/api/news/${encodeURIComponent(stockName)}`, function(data) {
+                    let newsHtml = '';
+                    data.forEach(item => {
+                        newsHtml += `
+                            <div>
+                                <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                                <p>Published: ${item.time}</p>
+                            </div>
+                        `;
+                    });
+                    $('#newsContainer').html(newsHtml);
+                });
+            }
+
+            // Initial fetch
+            fetchNews($('#stockSelect').val());
+        });
+    </script>
+</body>
+</html>
