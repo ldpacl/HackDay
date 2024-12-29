@@ -1,11 +1,13 @@
 from flask import Flask, jsonify
 from flask_caching import Cache
+from flask_cors import CORS
 from news_fetcher import get_google_news
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 import pytz
 
 app = Flask(__name__)
+CORS(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 @app.route('/api/news/<stock_name>')

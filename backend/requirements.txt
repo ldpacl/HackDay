@@ -5,3 +5,4 @@ beautifulsoup4==4.10.0
 pytz==2021.3
 APScheduler==3.8.1
 Werkzeug==2.0.3
+Flask-CORS==3.0.10
